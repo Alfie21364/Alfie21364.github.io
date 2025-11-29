@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[你的名字] - 个人网站</title>
+  <!-- 引入样式库 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 粒子效果库 -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  
+  <!-- 自定义配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3B82F6',    // 主色（蓝色系）
+            secondary: '#EC4899',  // 辅助色（粉色系）
+            neutral: '#F9FAFB',    // 浅色背景
+            dark: '#1F2937',       // 深色文字
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Playfair Display"', 'serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto { content-visibility: auto; }
+      .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+      .transition-custom { transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1); }
+      .card-hover { @apply hover:-translate-y-2 hover:shadow-xl transition-custom; }
+      .fade-in { animation: fadeIn 0.8s ease forwards; }
+      .scale-in { animation: scaleIn 0.5s ease forwards; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* 粒子容器样式 */
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+  </style>
+  
+  <!-- 引入字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-neutral text-dark font-sans antialiased">
+  <!-- 导航栏 -->
+  <header id="navbar" class="fixed w-full z-50 bg-transparent transition-custom">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <!-- 网站标题 -->
+      <a href="#home" class="text-2xl font-bold font-display text-white text-shadow">
+        [你的名字]
+      </a>
+
+      <!-- 移动端菜单按钮 -->
+      <button id="menuBtn" class="lg:hidden text-white text-2xl focus:outline-none">
+        <i class="fa fa-bars"></i>
+      </button>
+
+      <!-- 桌面端导航 -->
+      <nav class="hidden lg:flex space-x-8">
+        <a href="#home" class="text-white hover:text-secondary transition-custom">首页</a>
+        <a href="#about" class="text-white hover:text-secondary transition-custom">关于我</a>
+        <a href="#works" class="text-white hover:text-secondary transition-custom">作品</a>
+        <a href="#contact" class="text-white hover:text-secondary transition-custom">联系我</a>
+      </nav>
+    </div>
+
+    <!-- 移动端菜单 -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-white shadow-lg absolute w-full scale-in">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+        <a href="#home" class="py-2 text-dark hover:text-primary transition-custom">首页</a>
+        <a href="#about" class="py-2 text-dark hover:text-primary transition-custom">关于我</a>
+        <a href="#works" class="py-2 text-dark hover:text-primary transition-custom">作品</a>
+        <a href="#contact" class="py-2 text-dark hover:text-primary transition-custom">联系我</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 回到顶部按钮 -->
+  <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-custom z-50">
+    <i class="fa fa-arrow-up"></i>
+  </button>
+
+  <main>
+    <!-- 1. 首页英雄区（带粒子效果） -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <!-- 粒子效果容器 -->
+      <div id="particles-js"></div>
+      
+      <!-- 背景图 -->
+      <div class="absolute inset-0 z-0">
+        <img src="https://picsum.photos/id/1015/1920/1080" alt="背景" class="w-full h-full object-cover opacity-90">
+        <div class="absolute inset-0 bg-dark/60"></div>
+      </div>
+
+      <!-- 首页内容（层级高于粒子效果） -->
+      <div class="container mx-auto px-4 relative z-20 text-center">
+        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold font-display text-white mb-6 text-shadow fade-in" style="animation-delay: 0.3s">
+          我是 <span class="text-secondary">[你的名字]</span>
+        </h1>
+        <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 max-w-2xl mx-auto mb-10 fade-in" style="animation-delay: 0.6s">
+          [一句话介绍自己，如：自由插画师 | 平面设计师 | 用色彩记录生活与情绪]
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in" style="animation-delay: 0.9s">
+          <a href="#works" class="px-8 py-3 bg-primary text-white rounded-full transition-custom hover:bg-primary/90 hover:shadow-lg">
+            查看我的作品
+          </a>
+          <a href="#contact" class="px-8 py-3 bg-transparent text-white border-2 border-white rounded-full transition-custom hover:bg-white/10">
+            联系我
+          </a>
+        </div>
+      </div>
+
+      <!-- 向下滚动提示 -->
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce fade-in z-20" style="animation-delay: 1.2s">
+        <a href="#about"><i class="fa fa-angle-down text-3xl"></i></a>
+      </div>
+    </section>
+
+    <!-- 2. 关于我（内容不变） -->
+    <section id="about" class="py-20 bg-white">
+      <div class="container mx-auto px-4">
+        <!-- 标题 -->
+        <div class="text-center mb-16 scroll-animate">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold font-display text-dark mb-4">关于我</h2>
+          <div class="w-20 h-1 bg-primary mx-auto"></div>
+        </div>
+
+        <!-- 关于内容 -->
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+          <!-- 左侧：个人介绍 -->
+          <div class="lg:w-1/2 scroll-animate">
+            <h3 class="text-2xl font-bold font-display mb-6 text-dark">
+              [你的身份标签，如：热爱生活的创意工作者]
+            </h3>
+            <p class="text-gray-600 mb-6 leading-relaxed">
+              [详细介绍1：从业经历/教育背景，如：“从事插画设计6年，毕业于XX美术学院，曾为XX品牌设计包装与宣传物料，擅长用温暖的色彩传递治愈感。”]
+            </p>
+            <p class="text-gray-600 mb-8 leading-relaxed">
+              [详细介绍2：个人理念/爱好，如：“创作灵感来自日常观察——街头的光影、咖啡馆的角落、旅行中的风景，都能成为我画面里的元素。闲暇时喜欢阅读和徒步，在自然中寻找色彩的平衡。”]
+            </p>
+
+            <!-- 个人信息卡片 -->
+            <div class="grid grid-cols-2 gap-6">
+              <div class="flex items-center gap-3 hover:scale-105 transition-custom">
+                <i class="fa fa-calendar text-primary text-xl"></i>
+                <div>
+                  <h4 class="font-semibold">从业年限</h4>
+                  <p class="text-gray-600">[X年]</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 hover:scale-105 transition-custom">
+                <i class="fa fa-paint-brush text-primary text-xl"></i>
+                <div>
+                  <h4 class="font-semibold">擅长领域</h4>
+                  <p class="text-gray-600">[插画/UI/平面设计]</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 hover:scale-105 transition-custom">
+                <i class="fa fa-map-marker text-primary text-xl"></i>
+                <div>
+                  <h4 class="font-semibold">所在城市</h4>
+                  <p class="text-gray-600">[XX市]</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 hover:scale-105 transition-custom">
+                <i class="fa fa-trophy text-primary text-xl"></i>
+                <div>
+                  <h4 class="font-semibold">获得奖项</h4>
+                  <p class="text-gray-600">[XX设计奖/无]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右侧：个人照片 -->
+          <div class="lg:w-1/2 scroll-animate">
+            <div class="relative">
+              <img src="https://picsum.photos/id/64/600/800" alt="[你的名字]" class="w-full h-auto rounded-lg shadow-xl hover:shadow-2xl transition-custom">
+              <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-secondary/20 rounded-lg"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 作品展示（内容不变） -->
+    <section id="works" class="py-20 bg-neutral">
+      <div class="container mx-auto px-4">
+        <!-- 标题 -->
+        <div class="text-center mb-16 scroll-animate">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold font-display text-dark mb-4">我的作品</h2>
+          <div class="w-20 h-1 bg-primary mx-auto"></div>
+          <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
+            [作品说明，如：“以下是我近年的创作，涵盖插画、平面设计、商业合作等方向，点击可查看详情。”]
+          </p>
+        </div>
+
+        <!-- 作品筛选 -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12 scroll-animate">
+          <button class="work-filter px-6 py-2 bg-primary text-white rounded-full transition-custom" data-filter="all">全部</button>
+          <button class="work-filter px-6 py-2 bg-white text-dark rounded-full transition-custom hover:bg-primary/10" data-filter="illustration">插画</button>
+          <button class="work-filter px-6 py-2 bg-white text-dark rounded-full transition-custom hover:bg-primary/10" data-filter="design">设计</button>
+          <button class="work-filter px-6 py-2 bg-white text-dark rounded-full transition-custom hover:bg-primary/10" data-filter="commercial">商业合作</button>
+        </div>
+
+        <!-- 作品网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 作品1 -->
+          <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover work-item" data-category="illustration">
+            <img src="https://picsum.photos/id/96/600/400" alt="春日序曲" class="w-full h-64 object-cover lazy-load">
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">《春日序曲》</h3>
+              <p class="text-gray-500 text-sm mb-4">插画 | 2024年</p>
+              <p class="text-gray-600 mb-4">以春天的花卉为主题，用柔和的色彩表现生机与温暖，曾用于XX品牌春季海报。</p>
+              <button class="text-primary font-medium transition-custom hover:underline work-detail-btn" 
+                      data-title="春日序曲" 
+                      data-type="插画 | 2024年" 
+                      data-desc="以春天的花卉为主题，用柔和的色彩表现生机与温暖，曾用于XX品牌春季海报。这幅作品尝试了水彩与数码结合的技法，保留了传统绘画的质感同时增强了色彩的表现力。" 
+                      data-img="https://picsum.photos/id/96/800/600">
+                查看详情 <i class="fa fa-arrow-right text-sm"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 作品2 -->
+          <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover work-item" data-category="design">
+            <img src="https://picsum.photos/id/20/600/400" alt="城市剪影" class="w-full h-64 object-cover lazy-load">
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">《城市剪影》</h3>
+              <p class="text-gray-500 text-sm mb-4">平面设计 | 2023年</p>
+              <p class="text-gray-600 mb-4">为XX咖啡馆设计的品牌视觉，用简洁的线条表现城市夜景，突出静谧氛围。</p>
+              <button class="text-primary font-medium transition-custom hover:underline work-detail-btn" 
+                      data-title="城市剪影" 
+                      data-type="平面设计 | 2023年" 
+                      data-desc="为XX咖啡馆设计的品牌视觉，用简洁的线条表现城市夜景，突出静谧氛围。设计灵感来自傍晚城市灯光渐次亮起的瞬间，通过几何图形与渐变色彩营造层次感。" 
+                      data-img="https://picsum.photos/id/20/800/600">
+                查看详情 <i class="fa fa-arrow-right text-sm"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 作品3 -->
+          <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover work-item" data-category="commercial">
+            <img src="https://picsum.photos/id/42/600/400" alt="海洋之歌" class="w-full h-64 object-cover lazy-load">
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">《海洋之歌》</h3>
+              <p class="text-gray-500 text-sm mb-4">插画 | 2024年</p>
+              <p class="text-gray-600 mb-4">儿童绘本《海洋冒险》的插图，用明亮的色彩吸引孩子注意力，传递环保理念。</p>
+              <button class="text-primary font-medium transition-custom hover:underline work-detail-btn" 
+                      data-title="海洋之歌" 
+                      data-type="插画 | 2024年" 
+                      data-desc="儿童绘本《海洋冒险》的插图，用明亮的色彩吸引孩子注意力，传递环保理念。这套插画共12幅，通过拟人化的海洋生物讲述保护海洋的故事，已由XX出版社出版。" 
+                      data-img="https://picsum.photos/id/42/800/600">
+                查看详情 <i class="fa fa-arrow-right text-sm"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 作品4 -->
+          <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover work-item" data-category="design">
+            <img src="https://picsum.photos/id/65/600/400" alt="极简主义海报" class="w-full h-64 object-cover lazy-load">
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">极简主义海报</h3>
+              <p class="text-gray-500 text-sm mb-4">平面设计 | 2023年</p>
+              <p class="text-gray-600 mb-4">为艺术展览设计的系列海报，采用极简风格，突出展品的艺术感。</p>
+              <button class="text-primary font-medium transition-custom hover:underline work-detail-btn" 
+                      data-title="极简主义海报" 
+                      data-type="平面设计 | 2023年" 
+                      data-desc="为艺术展览设计的系列海报，采用极简风格，突出展品的艺术感。通过留白与几何构图，让观众注意力集中在核心信息上，共设计3款不同主题的变体。" 
+                      data-img="https://picsum.photos/id/65/800/600">
+                查看详情 <i class="fa fa-arrow-right text-sm"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 加载更多按钮 -->
+        <div class="text-center mt-12 scroll-animate">
+          <button id="loadMore" class="px-8 py-3 bg-white text-primary border border-primary rounded-full transition-custom hover:bg-primary hover:text-white">
+            加载更多作品
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 联系我（内容不变） -->
+    <section id="contact" class="py-20 bg-white">
+      <div class="container mx-auto px-4">
+        <!-- 标题 -->
+        <div class="text-center mb-16 scroll-animate">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold font-display text-dark mb-4">联系我</h2>
+          <div class="w-20 h-1 bg-primary mx-auto"></div>
+          <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
+            [联系说明，如：“如果喜欢我的作品，或有合作意向，欢迎通过以下方式联系我，我会尽快回复。”]
+          </p>
+        </div>
+
+        <!-- 联系内容 -->
+        <div class="flex flex-col lg:flex-row gap-12">
+          <!-- 左侧：联系表单 -->
+          <div class="lg:w-1/2 scroll-animate">
+            <form id="contactForm" class="bg-neutral p-8 rounded-lg shadow-md">
+              <div class="mb-6">
+                <label for="name" class="block text-gray-700 mb-2">你的名字 <span class="text-red-500">*</span></label>
+                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-custom" placeholder="请输入你的名字" required>
+                <p class="error-message text-red-500 text-sm mt-1 hidden">请输入你的名字</p>
+              </div>
+              <div class="mb-6">
+                <label for="email" class="block text-gray-700 mb-2">你的邮箱 <span class="text-red-500">*</span></label>
+                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-custom" placeholder="请输入你的邮箱" required>
+                <p class="error-message text-red-500 text-sm mt-1 hidden">请输入有效的邮箱地址</p>
+              </div>
+              <div class="mb-6">
+                <label for="message" class="block text-gray-700 mb-2">你的留言 <span class="text-red-500">*</span></label>
+                <textarea id="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-custom" placeholder="请输入你想对我说的话/合作需求" required></textarea>
+                <p class="error-message text-red-500 text-sm mt-1 hidden">请输入留言内容（至少10个字）</p>
+              </div>
+              <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg transition-custom hover:bg-primary/90 hover:shadow-lg">
+                发送留言
+              </button>
+            </form>
+          </div>
+
+          <!-- 右侧：联系信息 -->
+          <div class="lg:w-1/2 scroll-animate">
+            <div class="bg-neutral p-8 rounded-lg shadow-md h-full">
+              <h3 class="text-xl font-bold mb-8">我的联系方式</h3>
+              
+              <!-- 联系方式列表 -->
+              <div class="space-y-6">
+                <div class="flex items-start gap-4 hover:translate-x-2 transition-custom">
+                  <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa fa-envelope text-primary text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">邮箱</h4>
+                    <a href="mailto:[你的邮箱]" class="text-gray-600 hover:text-primary transition-custom">[你的邮箱，如：xxx@xxx.com]</a>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4 hover:translate-x-2 transition-custom">
+                  <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa fa-phone text-primary text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">电话（可选）</h4>
+                    <a href="tel:[你的电话]" class="text-gray-600 hover:text-primary transition-custom">[你的电话，如：138-XXXX-XXXX]</a>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-4 hover:translate-x-2 transition-custom">
+                  <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa fa-weibo text-primary text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">社交媒体（可选）</h4>
+                    <a href="[你的微博链接]" class="text-gray-600 hover:text-primary transition-custom">微博：@[你的微博名]</a>
+                    <br>
+                    <a href="[你的小红书链接]" class="text-gray-600 hover:text-primary transition-custom">小红书：@[你的小红书名]</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 二维码 -->
+              <div class="mt-10">
+                <h4 class="font-semibold mb-4">微信二维码（扫码添加）</h4>
+                <div class="w-48 h-48 bg-white p-2 rounded-lg shadow-md hover:shadow-lg transition-custom">
+                  <img src="https://picsum.photos/id/1/200/200" alt="微信二维码" class="w-full h-full object-cover">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚（内容不变） -->
+  <footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <!-- 左侧：标题 -->
+        <div class="mb-6 md:mb-0">
+          <h3 class="text-2xl font-bold font-display">[你的名字]的个人网站</h3>
+          <p class="text-gray-400 mt-2">[个人Slogan，如：“用创意点亮生活，用作品传递情感”]</p>
+        </div>
+
+        <!-- 右侧：社交媒体链接 -->
+        <div class="flex gap-6">
+          <a href="[微博链接]" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-custom hover:bg-primary hover:scale-110">
+            <i class="fa fa-weibo"></i>
+          </a>
+          <a href="[小红书链接]" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-custom hover:bg-primary hover:scale-110">
+            <i class="fa fa-book"></i>
+          </a>
+          <a href="[Behance链接]" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-custom hover:bg-primary hover:scale-110">
+            <i class="fa fa-behance"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 版权信息 -->
+      <div class="border-t border-white/10 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2024 [你的名字] 版权所有 | 个人网站设计与制作</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 作品详情模态框（内容不变） -->
+  <div id="workModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="modalOverlay"></div>
+    <div class="relative bg-white rounded-lg shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-auto scale-in">
+      <button id="closeModal" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-dark hover:bg-gray-200 transition-custom z-10">
+        <i class="fa fa-times"></i>
+      </button>
+      <div class="p-6 md:p-8">
+        <img id="modalImg" src="" alt="作品详情" class="w-full h-auto rounded-lg mb-6">
+        <h3 id="modalTitle" class="text-2xl font-bold font-display mb-2"></h3>
+        <p id="modalType" class="text-gray-500 mb-4"></p>
+        <p id="modalDesc" class="text-gray-600 leading-relaxed"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript（新增粒子效果配置） -->
+  <script>
+    // 粒子效果初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS('particles-js', {
+        "particles": {
+          "number": {
+            "value": 80,  // 粒子数量
+            "density": {
+              "enable": true,
+              "value_area": 800
+            }
+          },
+          "color": {
+            "value": ["#3B82F6", "#EC4899", "#ffffff"]  // 粒子颜色（主色、辅助色、白色）
+          },
+          "shape": {
+            "type": "circle",  // 粒子形状（circle/edge/triangle/polygon/star/image）
+            "stroke": {
+              "width": 0,
+              "color": "#000000"
+            }
+          },
+          "opacity": {
+            "value": 0.5,
+            "random": true,
+            "anim": {
+              "enable": true,
+              "speed": 1,
+              "opacity_min": 0.1,
+              "sync": false
+            }
+          },
+          "size": {
+            "value": 3,
+            "random": true,
+            "anim": {
+              "enable": true,
+              "speed": 2,
+              "size_min": 0.1,
+              "sync": false
+            }
+          },
+          "line_linked": {
+            "enable": true,  // 是否连接粒子
+            "distance": 150,  // 连接距离
+            "color": "#3B82F6",  // 连接线颜色（主色）
+            "opacity": 0.2,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 1,  // 移动速度
+            "direction": "none",
+            "random": true,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {
+              "enable": true,  // 鼠标悬停效果
+              "mode": "grab"   // 悬停模式（grab/repulse/bubble）
+            },
+            "onclick": {
+              "enable": true,  // 点击效果
+              "mode": "push"   // 点击模式（push/remove/bubble/repulse）
+            },
+            "resize": true
+          }
+        },
+        "retina_detect": true  // 视网膜屏幕适配
+      });
+    });
+
+    // 原有功能代码（导航、滚动、模态框等）
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      const backToTop = document.getElementById('backToTop');
+      
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-dark/90', 'backdrop-blur', 'shadow-lg');
+        navbar.classList.remove('py-4');
+        navbar.classList.add('py-2');
+      } else {
+        navbar.classList.remove('bg-dark/90', 'backdrop-blur', 'shadow-lg');
+        navbar.classList.remove('py-2');
+        navbar.classList.add('py-4');
+      }
+      
+      if (window.scrollY > 500) {
+        backToTop.classList.remove('opacity-0', 'invisible');
+        backToTop.classList.add('opacity-100', 'visible');
+      } else {
+        backToTop.classList.add('opacity-0', 'invisible');
+        backToTop.classList.remove('opacity-100', 'visible');
+      }
+
+      document.querySelectorAll('.scroll-animate').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          el.classList.add('fade-in');
+        }
+      });
+    });
+
+    document.getElementById('menuBtn').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          document.getElementById('mobileMenu').classList.add('hidden');
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    document.getElementById('backToTop').addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.querySelectorAll('.work-filter').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filter = this.getAttribute('data-filter');
+        
+        document.querySelectorAll('.work-filter').forEach(b => {
+          b.classList.remove('bg-primary', 'text-white');
+          b.classList.add('bg-white', 'text-dark', 'hover:bg-primary/10');
+        });
+        this.classList.remove('bg-white', 'text-dark', 'hover:bg-primary/10');
+        this.classList.add('bg-primary', 'text-white');
+        
+        document.querySelectorAll('.work-item').forEach(item => {
+          if (filter === 'all' || item.getAttribute('data-category') === filter) {
+            item.style.display = 'block';
+            setTimeout(() => item.classList.add('scale-in'), 50);
+          } else {
+            item.style.display = 'none';
+            item.classList.remove('scale-in');
+          }
+        });
+      });
+    });
+
+    const modal = document.getElementById('workModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalType = document.getElementById('modalType');
+    const modalDesc = document.getElementById('modalDesc');
+    
+    document.querySelectorAll('.work-detail-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        modalImg.src = this.getAttribute('data-img');
+        modalTitle.textContent = this.getAttribute('data-title');
+        modalType.textContent = this.getAttribute('data-type');
+        modalDesc.textContent = this.getAttribute('data-desc');
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    
+    function closeModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('modalOverlay').addEventListener('click', closeModal);
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let isValid = true;
+      const name = document.getElementById('name');
+      const email = document.getElementById('email');
+      const message = document.getElementById('message');
+      
+      if (!name.value.trim()) {
+        showError(name, '请输入你的名字');
+        isValid = false;
+      } else {
+        hideError(name);
+      }
+      
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.value.trim())) {
+        showError(email, '请输入有效的邮箱地址');
+        isValid = false;
+      } else {
+        hideError(email);
+      }
+      
+      if (message.value.trim().length < 10) {
+        showError(message, '请输入留言内容（至少10个字）');
+        isValid = false;
+      } else {
+        hideError(message);
+      }
+      
+      if (isValid) {
+        alert('留言发送成功！我会尽快回复你~');
+        this.reset();
+      }
+    });
+    
+    function showError(input, text) {
+      const errorEl = input.nextElementSibling;
+      errorEl.textContent = text;
+      errorEl.classList.remove('hidden');
+      input.classList.add('border-red-500');
+    }
+    
+    function hideError(input) {
+      const errorEl = input.nextElementSibling;
+      errorEl.classList.add('hidden');
+      input.classList.remove('border-red-500');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const lazyImages = document.querySelectorAll('.lazy-load');
+      
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const image = entry.target;
+              image.classList.add('fade-in');
+              imageObserver.unobserve(image);
+            }
+          });
+        });
+        
+        lazyImages.forEach(image => {
+          imageObserver.observe(image);
+        });
+      }
+    });
+
+    document.getElementById('loadMore').addEventListener('click', function() {
+      this.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 加载中...';
+      setTimeout(() => {
+        this.innerHTML = '没有更多作品了';
+        this.disabled = true;
+        this.classList.add('opacity-50', 'cursor-not-allowed');
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
