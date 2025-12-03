@@ -1,709 +1,1044 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alfie - 个人网站</title>
-  <!-- 引入样式库 -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <!-- 粒子效果库 -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  
-  <!-- 自定义配置 -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#3B82F6',    // 主色（蓝色系）
-            secondary: '#EC4899',  // 辅助色（粉色系）
-            neutral: '#F9FAFB',    // 浅色背景
-            dark: '#1F2937',       // 深色文字
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            display: ['"Playfair Display"', 'serif'],
-          },
-        },
-      }
-    }
-  </script>
-  
-  <!-- 自定义工具类 -->
-  <style type="text/tailwindcss">
-    @layer utilities {
-      .content-auto { content-visibility: auto; }
-      .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-      .transition-custom { transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1); }
-      .card-hover { @apply hover:-translate-y-2 hover:shadow-xl transition-custom; }
-      .fade-in { animation: fadeIn 0.8s ease forwards; }
-      .scale-in { animation: scaleIn 0.5s ease forwards; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes scaleIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* 粒子容器样式 */
-    #particles-js {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 1;
-    }
-  </style>
-  
-  <!-- 引入字体 -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geek Profile Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-green': '#39ff14',
+                        'neon-orange': '#ff7f00',
+                        'neon-red': '#ff073a',
+                        'dark-bg': '#0a1128',
+                        'card-bg': '#101f42',
+                    },
+                    fontFamily: {
+                        'code': ['Consolas', 'Monaco', 'monospace'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'scan': 'scan 4s linear infinite',
+                        'typing': 'typing 3.5s steps(40, end)',
+                        'blink': 'blink .7s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(0, 243, 255, 0.5), 0 0 10px rgba(0, 243, 255, 0.3)' },
+                            '100%': { boxShadow: '0 0 10px rgba(0, 243, 255, 0.8), 0 0 20px rgba(0, 243, 255, 0.6), 0 0 30px rgba(0, 243, 255, 0.4)' },
+                        },
+                        scan: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' },
+                        },
+                        typing: {
+                            'from': { width: '0' },
+                            'to': { width: '100%' }
+                        },
+                        blink: {
+                            'from, to': { opacity: '1' },
+                            '50%': { opacity: '0' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow-neon-green {
+                text-shadow: 0 0 5px rgba(57, 255, 20, 0.7), 0 0 10px rgba(57, 255, 20, 0.5);
+            }
+            .text-shadow-neon-orange {
+                text-shadow: 0 0 5px rgba(255, 127, 0, 0.7), 0 0 10px rgba(255, 127, 0, 0.5);
+            }
+            .text-shadow-neon-red {
+                text-shadow: 0 0 5px rgba(255, 7, 58, 0.7), 0 0 10px rgba(255, 7, 58, 0.5);
+            }
+            .border-glow-green {
+                box-shadow: 0 0 5px rgba(57, 255, 20, 0.7), 0 0 10px rgba(57, 255, 20, 0.5), inset 0 0 5px rgba(57, 255, 20, 0.7);
+            }
+            .border-glow-orange {
+                box-shadow: 0 0 5px rgba(255, 127, 0, 0.7), 0 0 10px rgba(255, 127, 0, 0.5), inset 0 0 5px rgba(255, 127, 0, 0.7);
+            }
+            .border-glow-red {
+                box-shadow: 0 0 5px rgba(255, 7, 58, 0.7), 0 0 10px rgba(255, 7, 58, 0.5), inset 0 0 5px rgba(255, 7, 58, 0.7);
+            }
+            .grid-bg {
+                background-size: 40px 40px;
+                background-image: 
+                    linear-gradient(to right, rgba(57, 255, 20, 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(57, 255, 20, 0.1) 1px, transparent 1px);
+            }
+            .scanline {
+                position: absolute;
+                width: 100%;
+                height: 5px;
+                background: rgba(57, 255, 20, 0.1);
+                z-index: 1;
+            }
+            .card-transform {
+                transform: none;
+                transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .card-collapsed {
+                transform: scaleY(0.2);
+                transform-origin: center top;
+            }
+            .light-bar {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to top, rgba(57, 255, 20, 0.3), transparent 70%);
+                transition: height 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                pointer-events: none;
+                z-index: 2;
+            }
+            .light-bar-collapsed {
+                height: 0;
+            }
+            .handle {
+                opacity: 0;
+                transform: scale(0.5);
+                transition: all 0.5s ease;
+                pointer-events: none;
+            }
+            .handle-visible {
+                opacity: 1;
+                transform: scale(1);
+                pointer-events: all;
+            }
+            .particle {
+                position: absolute;
+                pointer-events: none;
+                background-color: rgba(0, 243, 255, 0.8);
+                border-radius: 50%;
+                z-index: 100;
+            }
+            .code-block {
+                position: absolute;
+                font-family: 'Consolas', 'Monaco', monospace;
+                white-space: nowrap;
+                overflow: hidden;
+                border-right: 2px solid;
+                animation: typing 3.5s steps(40, end), blink .75s step-end infinite;
+            }
+            .modal-backdrop {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+            }
+            .modal-backdrop.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            .modal-content {
+                background-color: #101f42;
+                padding: 20px;
+                border-radius: 8px;
+                border: 2px solid #39ff14;
+                box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+                transform: scale(0.9);
+                transition: transform 0.3s ease;
+                max-width: 90%;
+                width: 300px; /* 固定宽度 */
+                text-align: center;
+            }
+            .modal-backdrop.active .modal-content {
+                transform: scale(1);
+            }
+            .close-btn {
+                background-color: transparent;
+                border: 1px solid #39ff14;
+                color: #39ff14;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-top: 15px;
+                transition: background-color 0.3s ease;
+            }
+            .close-btn:hover {
+                background-color: rgba(57, 255, 20, 0.2);
+            }
+        }
+    </style>
 </head>
+<body class="bg-dark-bg min-h-screen overflow-x-hidden font-code relative">
+    <!-- 网格背景 -->
+    <div class="grid-bg fixed inset-0 z-0"></div>
+    
+    <!-- 扫描线效果 -->
+    <div class="scanline animate-scan"></div>
+    
+    <!-- 粒子效果容器 -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-10"></div>
+    
+    <!-- 随机代码片段 -->
+    <div id="code-snippets" class="fixed inset-0 pointer-events-none z-0"></div>
+    
+    <!-- 主内容区 -->
+    <div class="container mx-auto px-4 py-16 relative z-20 flex justify-center items-center min-h-screen">
+        <!-- 个人名牌卡片 -->
+        <div id="profile-card" class="card-transform bg-card-bg rounded-lg w-full max-w-md overflow-hidden border border-neon-green relative animate-float cursor-pointer">
+            <!-- 霓虹光线效果 -->
+            <div id="light-bar" class="light-bar"></div>
+            
+            <!-- 卡片内容 -->
+            <div id="card-content" class="p-6 transition-all duration-500">
+                <!-- 头像区域 -->
+                <div class="flex justify-center mb-6">
+                    <div class="relative">
+                        <div class="w-24 h-24 rounded-full bg-neon-green/20 border-2 border-neon-green border-glow-green flex items-center justify-center text-5xl overflow-hidden">
+                            <span class="text-white w-full h-full bg-cover bg-center" style="background-image: url('https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/2c7cd70e7ab44304af229e9963aa525c.png~tplv-a9rns2rl98-24:720:720.png?rcl=2025120103051523535CC7A46DC56B759C&amp;rk3s=8e244e95&amp;rrcfp=8a172a1a&amp;x-expires=1765134315&amp;x-signature=qC58J5vyR9oeNXi%2F5Ml9R5L5R%2Bc%3D')"></span>
+                        </div>
+                        <!-- 在线状态指示器 -->
+                        <div class="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-green-500 border-2 border-card-bg"></div>
+                    </div>
+                </div>
+                
+                <!-- 个人信息 -->
+                <div class="text-center mb-6">
+                    <h1 class="text-white text-2xl font-bold mb-1 text-shadow-neon-green">Alfie</h1>
+                    <p class="text-neon-green text-shadow-neon-green">@alfie21364</p>
+                </div>
+                
+                <!-- 职位和信息 -->
+                <div class="space-y-3 mb-8">
+                    <div class="flex items-center text-gray-300">
+                        <i class="fa fa-briefcase text-neon-green mr-3"></i>
+                        <span>Struggling High School Student</span>
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <i class="fa fa-map-marker text-neon-orange mr-3"></i>
+                        <span>Chongqing, China</span>
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <i class="fa fa-calendar text-neon-red mr-3"></i>
+                        <span>Birthday: 2008.02.13</span>
+                    </div>
+                </div>
+                
+                <!-- 兴趣爱好标签 -->
+                <div class="mb-8">
+                    <h2 class="text-white text-lg mb-3 flex items-center">
+                        <i class="fa fa-heart text-neon-red mr-2"></i>Favorite
+                    </h2>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-neon-green/10 text-neon-green rounded-full text-sm border border-neon-green/30 hover:bg-neon-green/20 transition-colors">Playing football</span>
+                        <span class="px-3 py-1 bg-neon-green/10 text-neon-green rounded-full text-sm border border-neon-green/30 hover:bg-neon-green/20 transition-colors">Playing basketball</span>
+                        <span class="px-3 py-1 bg-neon-green/10 text-neon-green rounded-full text-sm border border-neon-green/30 hover:bg-neon-green/20 transition-colors">Playing the piano</span>
+                        <span class="px-3 py-1 bg-neon-green/10 text-neon-green rounded-full text-sm border border-neon-green/30 hover:bg-neon-green/20 transition-colors">Playing the guitar</span>
+                        
+                        <span class="px-3 py-1 bg-neon-orange/10 text-neon-orange rounded-full text-sm border border-neon-orange/30 hover:bg-neon-orange/20 transition-colors">Photography</span>
+                        <span class="px-3 py-1 bg-neon-orange/10 text-neon-orange rounded-full text-sm border border-neon-orange/30 hover:bg-neon-orange/20 transition-colors">Drawing</span>
+                        <span class="px-3 py-1 bg-neon-orange/10 text-neon-orange rounded-full text-sm border border-neon-orange/30 hover:bg-neon-orange/20 transition-colors">Traveling</span>
+                        <span class="px-3 py-1 bg-neon-orange/10 text-neon-orange rounded-full text-sm border border-neon-orange/30 hover:bg-neon-orange/20 transition-colors">Listening to music</span>
+                        
 
-<body class="bg-neutral text-dark font-sans antialiased">
-  <!-- 导航栏 -->
-  <header id="navbar" class="fixed w-full z-50 bg-transparent transition-custom">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <!-- 网站标题 -->
-      <a href="#home" class="text-2xl font-bold font-display text-white text-shadow">
-        Alfie
-      </a>
-
-      <!-- 移动端菜单按钮 -->
-      <button id="menuBtn" class="lg:hidden text-white text-2xl focus:outline-none">
-        <i class="fa fa-bars"></i>
-      </button>
-
-      <!-- 桌面端导航 -->
-      <nav class="hidden lg:flex space-x-8">
-        <a href="#home" class="text-white hover:text-secondary transition-custom">首页</a>
-        <a href="#about" class="text-white hover:text-secondary transition-custom">关于我</a>
-        <a href="#works" class="text-white hover:text-secondary transition-custom">作品</a>
-        <a href="#contact" class="text-white hover:text-secondary transition-custom">联系我</a>
-      </nav>
+</span>
+                    </div>
+                </div>
+                
+                <!-- 社交连接 -->
+                <div class="mb-6">
+                    <h2 class="text-white text-lg mb-3 flex items-center">
+                        <i class="fa fa-link text-neon-orange mr-2"></i>Connect
+                    </h2>
+                    <div class="flex justify-center gap-4">
+                        <a href="https://github.com/Alfie21364" target="_blank" id="github-link" class="w-10 h-10 rounded-full bg-neon-green/10 flex items-center justify-center text-neon-green border border-neon-green/30 hover:bg-neon-green/20 transition-all hover:scale-110">
+                            <i class="fa fa-github"></i>
+                        </a>
+                        <a href="#" id="weixin-link" class="w-10 h-10 rounded-full bg-neon-green/10 flex items-center justify-center text-neon-green border border-neon-green/30 hover:bg-neon-green/20 transition-all hover:scale-110">
+                            <i class="fa fa-weixin"></i>
+                        </a>
+                        <a href="https://www.douyin.com/user/MS4wLjABAAAAe1kAcdP3dhMQVpZilibWxoyGOctePkzgz-Vx0yFGWBU6oyrei6NTHbEq5laOBTrO?from_tab_name=main" target="_blank" id="tiktok-link" class="w-10 h-10 rounded-full bg-neon-green/10 flex items-center justify-center text-neon-green border border-neon-green/30 hover:bg-neon-green/20 transition-all hover:scale-110">
+                            <img src="https://cdn.worldvectorlogo.com/logos/tiktok-logo-2-3.svg" alt="TikTok" class="w-6 h-6 filter invert drop-shadow-[0_0_3px_rgba(178,0,255,0.8)]" style="filter: brightness(0) saturate(100%) invert(40%) sepia(100%) saturate(500%) hue-rotate(260deg) brightness(100%) contrast(100%);">
+                        </a>
+                        <a href="https://space.bilibili.com/500862058?spm_id_from=333.337.0.0" target="_blank" id="bilibili-link" class="w-10 h-10 rounded-full bg-neon-green/10 flex items-center justify-center text-neon-green border border-neon-green/30 hover:bg-neon-green/20 transition-all hover:scale-110">
+                            <img src="https://cdn.worldvectorlogo.com/logos/bilibili.svg" alt="Bilibili" class="w-6 h-6">
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 底部状态 -->
+                <div class="pt-4 border-t border-gray-700/50 text-sm text-gray-400 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                        <span>Studying</span>
+                    </div>
+                    <div id="current-time">Loading current time...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 展开手柄 - 移到页面底部中央 -->
+    <div id="expand-handle-container" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-30">
+        <div id="expand-handle" class="handle w-10 h-10 rounded-full bg-neon-green/20 border-2 border-neon-green flex items-center justify-center animate-pulse-slow border-glow-green cursor-pointer">
+            <i class="fa fa-chevron-down text-neon-green"></i>
+        </div>
+        <span id="expand-text" class="handle mt-2 text-neon-green text-xs font-bold tracking-wider text-shadow-neon-green">点击收起卡片</span>
     </div>
 
-    <!-- 移动端菜单 -->
-    <div id="mobileMenu" class="hidden lg:hidden bg-white shadow-lg absolute w-full scale-in">
-      <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
-        <a href="#home" class="py-2 text-dark hover:text-primary transition-custom">首页</a>
-        <a href="#about" class="py-2 text-dark hover:text-primary transition-custom">关于我</a>
-        <a href="#works" class="py-2 text-dark hover:text-primary transition-custom">作品</a>
-        <a href="#contact" class="py-2 text-dark hover:text-primary transition-custom">联系我</a>
-      </div>
+    <!-- 微信二维码模态框 -->
+    <div id="weixin-modal" class="modal-backdrop">
+        <div class="modal-content">
+            <h3 class="text-white text-xl mb-4 text-shadow-neon-green">WeChat QR Code</h3>
+            <img src="https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/4d7b85e7335f4fa3912b54132cdb7d84.jpg~tplv-a9rns2rl98-24:720:720.image?rcl=20251201030039664502CE95217EE9D1FB&amp;rk3s=8e244e95&amp;rrcfp=8a172a1a&amp;x-expires=1765134039&amp;x-signature=M9ID9iQbYYLLKl7efzChcqPP%2FRw%3D" alt="WeChat QR Code" class="w-full max-w-xs mx-auto rounded-md border-2 border-neon-green border-glow-green">
+            <button id="close-modal" class="close-btn">Close</button>
+        </div>
     </div>
-  </header>
 
-  <!-- 回到顶部按钮 -->
-  <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-custom z-50">
-    <i class="fa fa-arrow-up"></i>
-  </button>
-
-  <main>
-    <!-- 1. 首页英雄区（带粒子效果） -->
-    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
-      <!-- 粒子效果容器 -->
-      <div id="particles-js"></div>
-      
-      <!-- 背景图 -->
-      <div class="absolute inset-0 z-0">
-        <img src="https://picsum.photos/id/1015/1920/1080" alt="背景" class="w-full h-full object-cover opacity-90">
-        <div class="absolute inset-0 bg-dark/60"></div>
-      </div>
-
-      <!-- 首页内容（层级高于粒子效果） -->
-      <div class="container mx-auto px-4 relative z-20 text-center">
-        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold font-display text-white mb-6 text-shadow fade-in" style="animation-delay: 0.3s">
-          我是 <span class="text-secondary">Alfie</span>
-        </h1>
-        <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 max-w-2xl mx-auto mb-10 fade-in" style="animation-delay: 0.6s">
-          学生 | 摄影爱好者 | 用照片记录生活与情绪
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in" style="animation-delay: 0.9s">
-          <a href="#works" class="px-8 py-3 bg-primary text-white rounded-full transition-custom hover:bg-primary/90 hover:shadow-lg">
-            查看我的作品
-          </a>
-          <a href="#contact" class="px-8 py-3 bg-transparent text-white border-2 border-white rounded-full transition-custom hover:bg-white/10">
-            联系我
-          </a>
-        </div>
-      </div>
-
-      <!-- 向下滚动提示 -->
-      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce fade-in z-20" style="animation-delay: 1.2s">
-        <a href="#about"><i class="fa fa-angle-down text-3xl"></i></a>
-      </div>
-    </section>
-
-    <!-- 2. 关于我 -->
-    <section id="about" class="py-20 bg-white">
-      <div class="container mx-auto px-4">
-        <!-- 标题 -->
-        <div class="text-center mb-16 scroll-animate">
-          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold font-display text-dark mb-4">关于我</h2>
-          <div class="w-20 h-1 bg-primary mx-auto"></div>
-        </div>
-
-        <!-- 关于内容 -->
-        <div class="flex flex-col lg:flex-row items-center gap-12">
-          <!-- 左侧：个人介绍 -->
-          <div class="lg:w-1/2 scroll-animate">
-            <h3 class="text-2xl font-bold font-display mb-6 text-dark">
-              苦中作乐的中国学生
-            </h3>
-            <p class="text-gray-600 mb-6 leading-relaxed">
-              我是一名热爱摄影的学生，喜欢用镜头捕捉生活中的美好瞬间。无论是街头的光影、咖啡馆的角落，还是旅行中的风景，都能成为我画面里的元素。摄影让我学会从不同角度观察世界，用照片记录下那些稍纵即逝的时刻。
-            </p>
-            <p class="text-gray-600 mb-8 leading-relaxed">
-              除了摄影，我也喜欢在闲暇时探索不同的社交媒体平台，分享我的作品和生活感悟。通过摄影，我希望能够传递温暖和治愈感，让每个人都能在快节奏的生活中找到属于自己的宁静时刻。
-            </p>
-
-            <!-- 个人信息卡片 -->
-            <div class="grid grid-cols-2 gap-6">
-              <div class="flex items-center gap-3 hover:scale-105 transition-custom">
-                <i class="fa fa-calendar text-primary text-xl"></i>
-                <div>
-                  <h4 class="font-semibold">从业年限</h4>
-                  <p class="text-gray-600">3年+</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3 hover:scale-105 transition-custom">
-                <i class="fa fa-camera text-primary text-xl"></i>
-                <div>
-                  <h4 class="font-semibold">擅长领域</h4>
-                  <p class="text-gray-600">摄影/后期/社交媒体运营</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3 hover:scale-105 transition-custom">
-                <i class="fa fa-map-marker text-primary text-xl"></i>
-                <div>
-                  <h4 class="font-semibold">所在城市</h4>
-                  <p class="text-gray-600">上海</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3 hover:scale-105 transition-custom">
-                <i class="fa fa-trophy text-primary text-xl"></i>
-                <div>
-                  <h4 class="font-semibold">获得奖项</h4>
-                  <p class="text-gray-600">校园摄影大赛一等奖</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 右侧：个人照片 -->
-          <div class="lg:w-1/2 scroll-animate">
-            <div class="relative">
-              <img src="https://picsum.photos/id/64/600/800" alt="Alfie" class="w-full h-auto rounded-lg shadow-xl hover:shadow-2xl transition-custom">
-              <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-secondary/20 rounded-lg"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. 作品展示 -->
-    <section id="works" class="py-20 bg-neutral">
-      <div class="container mx-auto px-4">
-        <!-- 标题 -->
-        <div class="text-center mb-16 scroll-animate">
-          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold font-display text-dark mb-4">我的作品</h2>
-          <div class="w-20 h-1 bg-primary mx-auto"></div>
-          <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
-            以下是我近年来的摄影作品，涵盖风景、人文、街拍等不同主题，每一张照片都承载着我对生活的感悟和对美的追求。
-          </p>
-        </div>
-
-        <!-- 作品筛选 -->
-        <div class="flex flex-wrap justify-center gap-4 mb-12 scroll-animate">
-          <button class="work-filter px-6 py-2 bg-primary text-white rounded-full transition-custom" data-filter="all">全部</button>
-          <button class="work-filter px-6 py-2 bg-white text-dark rounded-full transition-custom hover:bg-primary/10" data-filter="landscape">风景</button>
-          <button class="work-filter px-6 py-2 bg-white text-dark rounded-full transition-custom hover:bg-primary/10" data-filter="street">街拍</button>
-          <button class="work-filter px-6 py-2 bg-white text-dark rounded-full transition-custom hover:bg-primary/10" data-filter="portrait">人像</button>
-        </div>
-
-        <!-- 作品网格 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- 作品1 -->
-          <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover work-item" data-category="landscape">
-            <img src="https://picsum.photos/id/96/600/400" alt="春日序曲" class="w-full h-64 object-cover lazy-load">
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">《春日序曲》</h3>
-              <p class="text-gray-500 text-sm mb-4">风景 | 2024年</p>
-              <p class="text-gray-600 mb-4">以春天的花卉为主题，用柔和的色彩表现生机与温暖，记录了春日里最美好的时光。</p>
-              <button class="text-primary font-medium transition-custom hover:underline work-detail-btn" 
-                      data-title="春日序曲" 
-                      data-type="风景 | 2024年" 
-                      data-desc="以春天的花卉为主题，用柔和的色彩表现生机与温暖，记录了春日里最美好的时光。这幅作品尝试了不同的构图和光线处理，保留了自然的美感同时增强了色彩的表现力。" 
-                      data-img="https://picsum.photos/id/96/800/600">
-                查看详情 <i class="fa fa-arrow-right text-sm"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- 作品2 -->
-          <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover work-item" data-category="street">
-            <img src="https://picsum.photos/id/20/600/400" alt="城市剪影" class="w-full h-64 object-cover lazy-load">
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">《城市剪影》</h3>
-              <p class="text-gray-500 text-sm mb-4">街拍 | 2023年</p>
-              <p class="text-gray-600 mb-4">捕捉城市夜晚的光影变化，用简洁的线条表现都市生活的节奏感。</p>
-              <button class="text-primary font-medium transition-custom hover:underline work-detail-btn" 
-                      data-title="城市剪影" 
-                      data-type="街拍 | 2023年" 
-                      data-desc="捕捉城市夜晚的光影变化，用简洁的线条表现都市生活的节奏感。设计灵感来自傍晚城市灯光渐次亮起的瞬间，通过几何图形与渐变色彩营造层次感。" 
-                      data-img="https://picsum.photos/id/20/800/600">
-                查看详情 <i class="fa fa-arrow-right text-sm"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- 作品3 -->
-          <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover work-item" data-category="landscape">
-            <img src="https://picsum.photos/id/42/600/400" alt="海洋之歌" class="w-full h-64 object-cover lazy-load">
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">《海洋之歌》</h3>
-              <p class="text-gray-500 text-sm mb-4">风景 | 2024年</p>
-              <p class="text-gray-600 mb-4">拍摄于海边的日出时刻，用广角镜头捕捉海天一色的壮丽景象。</p>
-              <button class="text-primary font-medium transition-custom hover:underline work-detail-btn" 
-                      data-title="海洋之歌" 
-                      data-type="风景 | 2024年" 
-                      data-desc="拍摄于海边的日出时刻，用广角镜头捕捉海天一色的壮丽景象。这幅作品展现了大自然的宁静与力量，传递了对美好生活的向往。" 
-                      data-img="https://picsum.photos/id/42/800/600">
-                查看详情 <i class="fa fa-arrow-right text-sm"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- 作品4 -->
-          <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover work-item" data-category="street">
-            <img src="https://picsum.photos/id/65/600/400" alt="极简主义海报" class="w-full h-64 object-cover lazy-load">
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">街头巷尾</h3>
-              <p class="text-gray-500 text-sm mb-4">街拍 | 2023年</p>
-              <p class="text-gray-600 mb-4">记录城市角落的日常生活，用黑白摄影突出光影对比和人文情怀。</p>
-              <button class="text-primary font-medium transition-custom hover:underline work-detail-btn" 
-                      data-title="街头巷尾" 
-                      data-type="街拍 | 2023年" 
-                      data-desc="记录城市角落的日常生活，用黑白摄影突出光影对比和人文情怀。通过细腻的构图和光影处理，展现了都市生活的另一面。" 
-                      data-img="https://picsum.photos/id/65/800/600">
-                查看详情 <i class="fa fa-arrow-right text-sm"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 加载更多按钮 -->
-        <div class="text-center mt-12 scroll-animate">
-          <button id="loadMore" class="px-8 py-3 bg-white text-primary border border-primary rounded-full transition-custom hover:bg-primary hover:text-white">
-            加载更多作品
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. 联系我 -->
-    <section id="contact" class="py-20 bg-white">
-      <div class="container mx-auto px-4">
-        <!-- 标题 -->
-        <div class="text-center mb-16 scroll-animate">
-          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold font-display text-dark mb-4">联系我</h2>
-          <div class="w-20 h-1 bg-primary mx-auto"></div>
-          <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
-            如果喜欢我的作品，或有合作意向，欢迎通过以下方式联系我，我会尽快回复。
-          </p>
-        </div>
-
-        <!-- 联系内容 -->
-        <div class="flex flex-col lg:flex-row gap-12">
-          <!-- 左侧：联系表单 -->
-          <div class="lg:w-1/2 scroll-animate">
-            <form id="contactForm" class="bg-neutral p-8 rounded-lg shadow-md">
-              <div class="mb-6">
-                <label for="name" class="block text-gray-700 mb-2">你的名字 <span class="text-red-500">*</span></label>
-                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-custom" placeholder="请输入你的名字" required>
-                <p class="error-message text-red-500 text-sm mt-1 hidden">请输入你的名字</p>
-              </div>
-              <div class="mb-6">
-                <label for="email" class="block text-gray-700 mb-2">你的邮箱 <span class="text-red-500">*</span></label>
-                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-custom" placeholder="请输入你的邮箱" required>
-                <p class="error-message text-red-500 text-sm mt-1 hidden">请输入有效的邮箱地址</p>
-              </div>
-              <div class="mb-6">
-                <label for="message" class="block text-gray-700 mb-2">你的留言 <span class="text-red-500">*</span></label>
-                <textarea id="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-custom" placeholder="请输入你想对我说的话/合作需求" required></textarea>
-                <p class="error-message text-red-500 text-sm mt-1 hidden">请输入留言内容（至少10个字）</p>
-              </div>
-              <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg transition-custom hover:bg-primary/90 hover:shadow-lg">
-                发送留言
-              </button>
-            </form>
-          </div>
-
-          <!-- 右侧：联系信息 -->
-          <div class="lg:w-1/2 scroll-animate">
-            <div class="bg-neutral p-8 rounded-lg shadow-md h-full">
-              <h3 class="text-xl font-bold mb-8">我的联系方式</h3>
-              
-              <!-- 联系方式列表 -->
-              <div class="space-y-6">
-                <div class="flex items-start gap-4 hover:translate-x-2 transition-custom">
-                  <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fa fa-envelope text-primary text-xl"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold mb-1">邮箱</h4>
-                    <a href="mailto:2137968550@qq.com" class="text-gray-600 hover:text-primary transition-custom">2137968550@qq.com</a>
-                  </div>
-                </div>
-
-                <div class="flex items-start gap-4 hover:translate-x-2 transition-custom">
-                  <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fa fa-phone text-primary text-xl"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold mb-1">电话</h4>
-                    <a href="tel:130-6235-3218" class="text-gray-600 hover:text-primary transition-custom">130-6235-3218</a>
-                  </div>
-                </div>
-
-                <div class="flex items-start gap-4 hover:translate-x-2 transition-custom">
-                  <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                    <i class="fa fa-weibo text-primary text-xl"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-semibold mb-1">社交媒体</h4>
-                    <a href="https://www.douyin.com/user/96205109651" target="_blank" class="text-gray-600 hover:text-primary transition-custom">抖音：@Alfie</a>
-                    <br>
-                    <a href="https://space.bilibili.com/500862058" target="_blank" class="text-gray-600 hover:text-primary transition-custom">Bilibili：@Alfieeeeeeeee</a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 二维码 -->
-              <div class="mt-10">
-                <h4 class="font-semibold mb-4">微信二维码（扫码添加）</h4>
-                <div class="w-48 h-48 bg-white p-2 rounded-lg shadow-md hover:shadow-lg transition-custom">
-                  <img src="https://picsum.photos/id/1/200/200" alt="微信二维码" class="w-full h-full object-cover">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- 页脚 -->
-  <footer class="bg-dark text-white py-12">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <!-- 左侧：标题 -->
-        <div class="mb-6 md:mb-0">
-          <h3 class="text-2xl font-bold font-display">Alfie的个人网站</h3>
-          <p class="text-gray-400 mt-2">用创意点亮生活，用作品传递情感</p>
-        </div>
-
-        <!-- 右侧：社交媒体链接 -->
-        <div class="flex gap-6">
-          <a href="https://www.douyin.com/user/96205109651" target="_blank" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-custom hover:bg-primary hover:scale-110">
-            <i class="fa fa-weibo"></i>
-          </a>
-          <a href="https://space.bilibili.com/500862058" target="_blank" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center transition-custom hover:bg-primary hover:scale-110">
-            <i class="fa fa-book"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- 版权信息 -->
-      <div class="border-t border-white/10 mt-8 pt-8 text-center text-gray-400">
-        <p>&copy; 2025 Alfie 版权所有 | 个人网站设计与制作</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- 作品详情模态框 -->
-  <div id="workModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="modalOverlay"></div>
-    <div class="relative bg-white rounded-lg shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-auto scale-in">
-      <button id="closeModal" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-dark hover:bg-gray-200 transition-custom z-10">
-        <i class="fa fa-times"></i>
-      </button>
-      <div class="p-6 md:p-8">
-        <img id="modalImg" src="" alt="作品详情" class="w-full h-auto rounded-lg mb-6">
-        <h3 id="modalTitle" class="text-2xl font-bold font-display mb-2"></h3>
-        <p id="modalType" class="text-gray-500 mb-4"></p>
-        <p id="modalDesc" class="text-gray-600 leading-relaxed"></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- JavaScript（新增粒子效果配置） -->
-  <script>
-    // 粒子效果初始化
-    document.addEventListener('DOMContentLoaded', function() {
-      particlesJS('particles-js', {
-        "particles": {
-          "number": {
-            "value": 80,  // 粒子数量
-            "density": {
-              "enable": true,
-              "value_area": 800
+    <script>
+        // 卡片折叠/展开功能
+        const profileCard = document.getElementById('profile-card');
+        const cardContent = document.getElementById('card-content');
+        const lightBar = document.getElementById('light-bar');
+        const expandHandle = document.getElementById('expand-handle');
+        const expandText = document.getElementById('expand-text');
+        const expandHandleContainer = document.getElementById('expand-handle-container');
+        let isCollapsed = false;
+        
+        // 页面加载完成后初始化手柄状态
+        document.addEventListener('DOMContentLoaded', () => {
+            // 确保手柄和文本始终可见
+            expandHandle.classList.add('handle-visible');
+            expandText.classList.add('handle-visible');
+            
+            // 设置初始状态
+            if (isCollapsed) {
+                profileCard.classList.add('card-collapsed');
+                lightBar.classList.add('light-bar-collapsed');
+                cardContent.style.opacity = '0';
             }
-          },
-          "color": {
-            "value": ["#3B82F6", "#EC4899", "#ffffff"]  // 粒子颜色（主色、辅助色、白色）
-          },
-          "shape": {
-            "type": "circle",  // 粒子形状（circle/edge/triangle/polygon/star/image）
-            "stroke": {
-              "width": 0,
-              "color": "#000000"
+            
+            // 设置初始文本
+            updateExpandText();
+        });
+        
+        // 更新展开/折叠文本
+        function updateExpandText() {
+            if (isCollapsed) {
+                // 折叠状态时完全隐藏手柄容器
+                expandHandleContainer.style.display = 'none';
+            } else {
+                // 展开状态时显示手柄容器和查看留言板的文本和箭头
+                expandHandleContainer.style.display = 'flex';
+                expandText.textContent = '点击查看留言板';
+                expandHandle.querySelector('i').className = 'fa fa-chevron-down text-neon-green';
             }
-          },
-          "opacity": {
-            "value": 0.5,
-            "random": true,
-            "anim": {
-              "enable": true,
-              "speed": 1,
-              "opacity_min": 0.1,
-              "sync": false
-            }
-          },
-          "size": {
-            "value": 3,
-            "random": true,
-            "anim": {
-              "enable": true,
-              "speed": 2,
-              "size_min": 0.1,
-              "sync": false
-            }
-          },
-          "line_linked": {
-            "enable": true,  // 是否连接粒子
-            "distance": 150,  // 连接距离
-            "color": "#3B82F6",  // 连接线颜色（主色）
-            "opacity": 0.2,
-            "width": 1
-          },
-          "move": {
-            "enable": true,
-            "speed": 1,  // 移动速度
-            "direction": "none",
-            "random": true,
-            "straight": false,
-            "out_mode": "out",
-            "bounce": false
-          }
-        },
-        "interactivity": {
-          "detect_on": "canvas",
-          "events": {
-            "onhover": {
-              "enable": true,  // 鼠标悬停效果
-              "mode": "grab"   // 悬停模式（grab/repulse/bubble）
-            },
-            "onclick": {
-              "enable": true,  // 点击效果
-              "mode": "push"   // 点击模式（push/remove/bubble/repulse）
-            },
-            "resize": true
-          }
-        },
-        "retina_detect": true  // 视网膜屏幕适配
-      });
-    });
-
-    // 原有功能代码（导航、滚动、模态框等）
-    window.addEventListener('scroll', function() {
-      const navbar = document.getElementById('navbar');
-      const backToTop = document.getElementById('backToTop');
-      
-      if (window.scrollY > 50) {
-        navbar.classList.add('bg-dark/90', 'backdrop-blur', 'shadow-lg');
-        navbar.classList.remove('py-4');
-        navbar.classList.add('py-2');
-      } else {
-        navbar.classList.remove('bg-dark/90', 'backdrop-blur', 'shadow-lg');
-        navbar.classList.remove('py-2');
-        navbar.classList.add('py-4');
-      }
-      
-      if (window.scrollY > 500) {
-        backToTop.classList.remove('opacity-0', 'invisible');
-        backToTop.classList.add('opacity-100', 'visible');
-      } else {
-        backToTop.classList.add('opacity-0', 'invisible');
-        backToTop.classList.remove('opacity-100', 'visible');
-      }
-
-      document.querySelectorAll('.scroll-animate').forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) {
-          el.classList.add('fade-in');
         }
-      });
-    });
-
-    document.getElementById('menuBtn').addEventListener('click', function() {
-      const mobileMenu = document.getElementById('mobileMenu');
-      mobileMenu.classList.toggle('hidden');
-    });
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
         
-        if (targetElement) {
-          document.getElementById('mobileMenu').classList.add('hidden');
-          window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-
-    document.getElementById('backToTop').addEventListener('click', function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    document.querySelectorAll('.work-filter').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const filter = this.getAttribute('data-filter');
-        
-        document.querySelectorAll('.work-filter').forEach(b => {
-          b.classList.remove('bg-primary', 'text-white');
-          b.classList.add('bg-white', 'text-dark', 'hover:bg-primary/10');
-        });
-        this.classList.remove('bg-white', 'text-dark', 'hover:bg-primary/10');
-        this.classList.add('bg-primary', 'text-white');
-        
-        document.querySelectorAll('.work-item').forEach(item => {
-          if (filter === 'all' || item.getAttribute('data-category') === filter) {
-            item.style.display = 'block';
-            setTimeout(() => item.classList.add('scale-in'), 50);
-          } else {
-            item.style.display = 'none';
-            item.classList.remove('scale-in');
-          }
-        });
-      });
-    });
-
-    const modal = document.getElementById('workModal');
-    const modalImg = document.getElementById('modalImg');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalType = document.getElementById('modalType');
-    const modalDesc = document.getElementById('modalDesc');
-    
-    document.querySelectorAll('.work-detail-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        modalImg.src = this.getAttribute('data-img');
-        modalTitle.textContent = this.getAttribute('data-title');
-        modalType.textContent = this.getAttribute('data-type');
-        modalDesc.textContent = this.getAttribute('data-desc');
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-    
-    function closeModal() {
-      modal.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
-    document.getElementById('closeModal').addEventListener('click', closeModal);
-    document.getElementById('modalOverlay').addEventListener('click', closeModal);
-
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      let isValid = true;
-      const name = document.getElementById('name');
-      const email = document.getElementById('email');
-      const message = document.getElementById('message');
-      
-      if (!name.value.trim()) {
-        showError(name, '请输入你的名字');
-        isValid = false;
-      } else {
-        hideError(name);
-      }
-      
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email.value.trim())) {
-        showError(email, '请输入有效的邮箱地址');
-        isValid = false;
-      } else {
-        hideError(email);
-      }
-      
-      if (message.value.trim().length < 10) {
-        showError(message, '请输入留言内容（至少10个字）');
-        isValid = false;
-      } else {
-        hideError(message);
-      }
-      
-      if (isValid) {
-        alert('留言发送成功！我会尽快回复你~');
-        this.reset();
-      }
-    });
-    
-    function showError(input, text) {
-      const errorEl = input.nextElementSibling;
-      errorEl.textContent = text;
-      errorEl.classList.remove('hidden');
-      input.classList.add('border-red-500');
-    }
-    
-    function hideError(input) {
-      const errorEl = input.nextElementSibling;
-      errorEl.classList.add('hidden');
-      input.classList.remove('border-red-500');
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const lazyImages = document.querySelectorAll('.lazy-load');
-      
-      if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const image = entry.target;
-              image.classList.add('fade-in');
-              imageObserver.unobserve(image);
+        // 卡片点击事件
+        profileCard.addEventListener('click', (e) => {
+            // 确保点击的不是手柄（手柄现在在卡片外部）
+            // 并且当前不是在留言板页面
+            if (!expandHandle.contains(e.target) && currentPage !== 'guestbook') {
+                toggleCard(e);
             }
-          });
         });
         
-        lazyImages.forEach(image => {
-          imageObserver.observe(image);
+        // 手柄点击事件 - 单独绑定
+        expandHandle.addEventListener('click', (e) => {
+            // 阻止事件冒泡
+            e.stopPropagation();
+            toggleCard(e);
         });
-      }
-    });
+        
+        // 文本点击事件 - 单独绑定
+        expandText.addEventListener('click', (e) => {
+            // 阻止事件冒泡
+            e.stopPropagation();
+            toggleCard(e);
+        });
+        
+        // 页面状态：'profile' 或 'guestbook'
+        let currentPage = 'profile';
+        
+        function toggleCard(event) {
+            if (currentPage === 'profile') {
+                // 从个人资料切换到留言板
+                profileCard.classList.add('card-collapsed');
+                lightBar.classList.add('light-bar-collapsed');
+                cardContent.style.opacity = '0';
+                
+                setTimeout(() => {
+                    // 切换到留言板内容
+                    cardContent.innerHTML = getGuestbookHTML();
+                    currentPage = 'guestbook';
+                    
+                    // 重新展开卡片
+                    profileCard.classList.remove('card-collapsed');
+                    lightBar.classList.remove('light-bar-collapsed');
+                    setTimeout(() => {
+                        cardContent.style.opacity = '1';
+                        updateExpandText();
+                        // 初始化留言板功能
+                        initGuestbook();
+                    }, 100);
+                }, 300);
+                
+                // 添加粒子爆炸效果
+                createParticles(event.clientX, event.clientY, 30);
+            } else {
+                // 从留言板切换回个人资料
+                profileCard.classList.add('card-collapsed');
+                lightBar.classList.add('light-bar-collapsed');
+                cardContent.style.opacity = '0';
+                
+                setTimeout(() => {
+                    // 切换回个人资料内容
+                    cardContent.innerHTML = getProfileHTML();
+                    currentPage = 'profile';
+                    
+                    // 重新展开卡片
+                    profileCard.classList.remove('card-collapsed');
+                    lightBar.classList.remove('light-bar-collapsed');
+                    setTimeout(() => {
+                        cardContent.style.opacity = '1';
+                        updateExpandText();
+                        // 重新初始化社交链接
+                        setupSocialLinks();
+                    }, 100);
+                }, 300);
+                
+                // 添加粒子爆炸效果
+                createParticles(event.clientX, event.clientY, 30);
+            }
+        }
+        
+        // 获取个人资料HTML
+        function getProfileHTML() {
+            return `
+                <!-- 头像区域 -->
+                <div class="flex justify-center mb-6">
+                    <div class="relative">
+                        <div class="w-24 h-24 rounded-full bg-neon-green/20 border-2 border-neon-green border-glow-green flex items-center justify-center text-5xl overflow-hidden">
+                            <span class="text-white w-full h-full bg-cover bg-center" style="background-image: url('https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/2c7cd70e7ab44304af229e9963aa525c.png~tplv-a9rns2rl98-24:720:720.png?rcl=2025120103051523535CC7A46DC56B759C&amp;rk3s=8e244e95&amp;rrcfp=8a172a1a&amp;x-expires=1765134315&amp;x-signature=qC58J5vyR9oeNXi%2F5Ml9R5L5R%2Bc%3D')"></span>
+                        </div>
+                        <!-- 在线状态指示器 -->
+                        <div class="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-green-500 border-2 border-card-bg"></div>
+                    </div>
+                </div>
+                
+                <!-- 个人信息 -->
+                <div class="text-center mb-6">
+                    <h1 class="text-white text-2xl font-bold mb-1 text-shadow-neon-green">Alfie</h1>
+                    <p class="text-neon-green text-shadow-neon-green">@alfie21364</p>
+                </div>
+                
+                <!-- 职位和信息 -->
+                <div class="space-y-3 mb-8">
+                    <div class="flex items-center text-gray-300">
+                        <i class="fa fa-briefcase text-neon-green mr-3"></i>
+                        <span>Struggling High School Student</span>
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <i class="fa fa-map-marker text-neon-orange mr-3"></i>
+                        <span>Chongqing, China</span>
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <i class="fa fa-calendar text-neon-red mr-3"></i>
+                        <span>Birthday: 2008.02.13</span>
+                    </div>
+                </div>
+                
+                <!-- 兴趣爱好标签 -->
+                <div class="mb-8">
+                    <h2 class="text-white text-lg mb-3 flex items-center">
+                        <i class="fa fa-heart text-neon-red mr-2"></i>Favorite
+                    </h2>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-neon-green/10 text-neon-green rounded-full text-sm border border-neon-green/30 hover:bg-neon-green/20 transition-colors">Playing football</span>
+                        <span class="px-3 py-1 bg-neon-green/10 text-neon-green rounded-full text-sm border border-neon-green/30 hover:bg-neon-green/20 transition-colors">Playing basketball</span>
+                        <span class="px-3 py-1 bg-neon-green/10 text-neon-green rounded-full text-sm border border-neon-green/30 hover:bg-neon-green/20 transition-colors">Playing the piano</span>
+                        <span class="px-3 py-1 bg-neon-green/10 text-neon-green rounded-full text-sm border border-neon-green/30 hover:bg-neon-green/20 transition-colors">Playing the guitar</span>
+                        
+                        <span class="px-3 py-1 bg-neon-orange/10 text-neon-orange rounded-full text-sm border border-neon-orange/30 hover:bg-neon-orange/20 transition-colors">Photography</span>
+                        <span class="px-3 py-1 bg-neon-orange/10 text-neon-orange rounded-full text-sm border border-neon-orange/30 hover:bg-neon-orange/20 transition-colors">Drawing</span>
+                        <span class="px-3 py-1 bg-neon-orange/10 text-neon-orange rounded-full text-sm border border-neon-orange/30 hover:bg-neon-orange/20 transition-colors">Traveling</span>
+                        <span class="px-3 py-1 bg-neon-orange/10 text-neon-orange rounded-full text-sm border border-neon-orange/30 hover:bg-neon-orange/20 transition-colors">Listening to music</span>
+                        
 
-    document.getElementById('loadMore').addEventListener('click', function() {
-      this.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 加载中...';
-      setTimeout(() => {
-        this.innerHTML = '没有更多作品了';
-        this.disabled = true;
-        this.classList.add('opacity-50', 'cursor-not-allowed');
-      }, 1500);
-    });
-  </script>
-</body>
-</html>
+</span>
+                    </div>
+                </div>
+                
+                <!-- 社交连接 -->
+                <div class="mb-6">
+                    <h2 class="text-white text-lg mb-3 flex items-center">
+                        <i class="fa fa-link text-neon-orange mr-2"></i>Connect
+                    </h2>
+                    <div class="flex justify-center gap-4">
+                        <a href="https://github.com/Alfie21364" target="_blank" id="github-link" class="w-10 h-10 rounded-full bg-neon-green/10 flex items-center justify-center text-neon-green border border-neon-green/30 hover:bg-neon-green/20 transition-all hover:scale-110">
+                            <i class="fa fa-github"></i>
+                        </a>
+                        <a href="#" id="weixin-link" class="w-10 h-10 rounded-full bg-neon-green/10 flex items-center justify-center text-neon-green border border-neon-green/30 hover:bg-neon-green/20 transition-all hover:scale-110">
+                            <i class="fa fa-weixin"></i>
+                        </a>
+                        <a href="https://www.douyin.com/user/MS4wLjABAAAAe1kAcdP3dhMQVpZilibWxoyGOctePkzgz-Vx0yFGWBU6oyrei6NTHbEq5laOBTrO?from_tab_name=main" target="_blank" id="tiktok-link" class="w-10 h-10 rounded-full bg-neon-green/10 flex items-center justify-center text-neon-green border border-neon-green/30 hover:bg-neon-green/20 transition-all hover:scale-110">
+                            <img src="https://cdn.worldvectorlogo.com/logos/tiktok-logo-2-3.svg" alt="TikTok" class="w-6 h-6 filter invert drop-shadow-[0_0_3px_rgba(178,0,255,0.8)]" style="filter: brightness(0) saturate(100%) invert(40%) sepia(100%) saturate(500%) hue-rotate(260deg) brightness(100%) contrast(100%);">
+                        </a>
+                        <a href="https://space.bilibili.com/500862058?spm_id_from=333.337.0.0" target="_blank" id="bilibili-link" class="w-10 h-10 rounded-full bg-neon-green/10 flex items-center justify-center text-neon-green border border-neon-green/30 hover:bg-neon-green/20 transition-all hover:scale-110">
+                            <img src="https://cdn.worldvectorlogo.com/logos/bilibili.svg" alt="Bilibili" class="w-6 h-6">
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 底部状态 -->
+                <div class="pt-4 border-t border-gray-700/50 text-sm text-gray-400 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                        <span>Studying</span>
+                    </div>
+                    <div id="current-time">Loading current time...</div>
+                </div>
+            `;
+        }
+        
+        // 获取留言板HTML
+        function getGuestbookHTML() {
+            return `
+                <!-- 留言板标题 -->
+                <div class="text-center mb-6">
+                    <h1 class="text-white text-2xl font-bold mb-1 text-shadow-neon-green">Guestbook</h1>
+                    <p class="text-neon-green text-shadow-neon-green">Hello! Welcome friends from around the world to leave your messages for me here.</p>
+                </div>
+                
+                <!-- 留言表单 -->
+                <div class="mb-6 p-4 bg-dark-bg/50 rounded-lg border border-neon-green/30">
+                    <h2 class="text-white text-lg mb-3 flex items-center">
+                        <i class="fa fa-pencil text-neon-green mr-2"></i>Write a Message
+                    </h2>
+                    <form id="guestbook-form" class="space-y-3">
+                        <div>
+                            <input type="text" id="name-input" placeholder="Your name" class="w-full px-3 py-2 bg-dark-bg border border-neon-green/50 rounded text-white focus:outline-none focus:border-neon-green transition-colors">
+                        </div>
+                        <div>
+                            <textarea id="message-input" rows="3" placeholder="Your message..." class="w-full px-3 py-2 bg-dark-bg border border-neon-green/50 rounded text-white focus:outline-none focus:border-neon-green transition-colors resize-none"></textarea>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" id="submit-message" class="px-4 py-2 bg-neon-green/20 text-neon-green border border-neon-green rounded hover:bg-neon-green/30 transition-colors">
+                                <i class="fa fa-paper-plane mr-1"></i> Send
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- 留言列表 -->
+                <div class="mb-6">
+                    <h2 class="text-white text-lg mb-3 flex items-center">
+                        <i class="fa fa-comments text-neon-orange mr-2"></i>Messages
+                    </h2>
+                    <div id="messages-container" class="space-y-3 max-h-96 overflow-y-auto pr-2">
+                        <!-- 留言将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+                
+                <!-- 底部状态 -->
+                <div class="pt-4 border-t border-gray-700/50 text-sm text-gray-400 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                        <span>Guestbook Active</span>
+                    </div>
+                    <div id="guestbook-time">Loading current time...</div>
+                </div>
+            `;
+        }
+        
+        // 获取用户IP地址
+        function getUserIP() {
+            // 检查是否已经存储了IP地址
+            const storedIP = localStorage.getItem('userIP');
+            if (storedIP) {
+                return Promise.resolve(storedIP);
+            }
+            
+            // 使用公共IP地址API获取IP
+            return fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const ip = data.ip;
+                    localStorage.setItem('userIP', ip);
+                    return ip;
+                })
+                .catch(error => {
+                    console.error('Error fetching IP:', error);
+                    return 'Unknown';
+                });
+        }
+        
+        // 初始化留言板功能
+        function initGuestbook() {
+            // 更新时间显示
+            updateCurrentTime();
+            
+            // 获取留言表单和留言容器
+            const form = document.getElementById('guestbook-form');
+            const messagesContainer = document.getElementById('messages-container');
+            
+            // 加载保存的留言
+            loadMessages();
+            
+            // 获取并存储用户IP地址
+            getUserIP();
+            
+            // 阻止留言板内容区域的点击事件冒泡，防止触发页面切换
+            const guestbookContent = document.querySelectorAll('#card-content > div');
+            guestbookContent.forEach(div => {
+                div.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+            
+            // 阻止表单和输入框的点击事件冒泡
+            if (form) {
+                form.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+                
+                // 添加表单提交事件
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault(); // 阻止表单默认提交行为
+                    e.stopPropagation(); // 阻止事件冒泡到卡片
+                    
+                    const nameInput = document.getElementById('name-input');
+                    const messageInput = document.getElementById('message-input');
+                    
+                    const name = nameInput.value.trim();
+                    const message = messageInput.value.trim();
+                    
+                    if (name && message) {
+                        // 直接添加留言，不等待IP地址获取
+                        addMessage(name, message);
+                        nameInput.value = '';
+                        messageInput.value = '';
+                        
+                        // 同时异步获取IP地址，用于后续留言
+                        getUserIP();
+                        
+                        // 确保页面不会刷新
+                        return false;
+                    }
+                    
+                    // 确保页面不会刷新
+                    return false;
+                });
+            }
+            
+            // 阻止输入框的点击事件冒泡
+            const inputs = document.querySelectorAll('#name-input, #message-input');
+            inputs.forEach(input => {
+                input.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+            
+            // 阻止提交按钮的点击事件冒泡
+            const submitBtn = document.getElementById('submit-message');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+        }
+        
+        // 添加留言
+        function addMessage(name, content) {
+            // 获取现有留言
+            const messages = getMessages();
+            console.log('Current messages:', messages);
+            
+            // 获取用户IP地址
+            let userIP = 'Unknown';
+            // 尝试从localStorage获取IP地址
+            const storedIP = localStorage.getItem('userIP');
+            if (storedIP) {
+                userIP = storedIP;
+            }
+            
+            // 创建新留言
+            const newMessage = {
+                id: Date.now(),
+                name: name,
+                content: content,
+                timestamp: new Date().toISOString(),
+                ip: userIP
+            };
+            
+            console.log('New message:', newMessage);
+            
+            // 添加到末尾
+            messages.push(newMessage);
+            console.log('Updated messages:', messages);
+            
+            // 保存并重新渲染
+            saveMessages(messages);
+            renderMessages();
+        }
+        
+        // 获取留言列表
+        function getMessages() {
+            const messages = localStorage.getItem('guestbookMessages');
+            return messages ? JSON.parse(messages) : [];
+        }
+        
+        // 保存留言列表
+        function saveMessages(messages) {
+            localStorage.setItem('guestbookMessages', JSON.stringify(messages));
+        }
+        
+        // 加载留言
+        function loadMessages() {
+            renderMessages();
+        }
+        
+        // 渲染留言列表
+        function renderMessages() {
+            const messagesContainer = document.getElementById('messages-container');
+            if (!messagesContainer) return;
+            
+            const messages = getMessages();
+            messagesContainer.innerHTML = '';
+            
+            if (messages.length === 0) {
+                messagesContainer.innerHTML = `
+                    <div class="text-center text-gray-500 py-4">
+                        <i class="fa fa-comment-o text-2xl mb-2"></i>
+                        <p>No messages yet. Be the first to leave one!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            messages.forEach(message => {
+                const messageElement = document.createElement('div');
+                messageElement.className = 'p-3 bg-dark-bg/50 rounded-lg border border-neon-orange/30';
+                
+                const date = new Date(message.timestamp);
+                const formattedDate = date.toLocaleString('zh-CN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                messageElement.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="text-neon-orange font-bold">${escapeHtml(message.name)}</h3>
+                        <span class="text-xs text-gray-500">${formattedDate}</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">${escapeHtml(message.content)}</p>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-xs text-gray-600">
+                            <i class="fa fa-globe text-neon-green/70 mr-1"></i>
+                            ${message.ip || 'Unknown IP'}
+                        </span>
+                        <button class="delete-message text-xs text-neon-red hover:text-red-400 transition-colors" data-id="${message.id}">
+                            <i class="fa fa-trash-o"></i> Delete
+                        </button>
+                    </div>
+                `;
+                
+                messagesContainer.appendChild(messageElement);
+            });
+            
+            // 添加删除按钮事件
+            document.querySelectorAll('.delete-message').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const messageId = parseInt(this.getAttribute('data-id'));
+                    deleteMessage(messageId);
+                });
+            });
+        }
+        
+        // 删除留言
+        function deleteMessage(id) {
+            const messages = getMessages();
+            const updatedMessages = messages.filter(message => message.id !== id);
+            saveMessages(updatedMessages);
+            renderMessages();
+        }
+        
+        // HTML转义函数
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 设置社交链接
+        function setupSocialLinks() {
+            setupSocialLink('github-link', 'https://github.com/Alfie21364');
+            setupSocialLink('tiktok-link', 'https://www.douyin.com/user/MS4wLjABAAAAe1kAcdP3dhMQVpZilibWxoyGOctePkzgz-Vx0yFGWBU6oyrei6NTHbEq5laOBTrO?from_tab_name=main');
+            setupSocialLink('bilibili-link', 'https://space.bilibili.com/500862058?spm_id_from=333.337.0.0');
+            
+            // 重新设置微信模态框
+            const weixinLink = document.getElementById('weixin-link');
+            if (weixinLink) {
+                weixinLink.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    weixinModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+        }
+        
+        // 粒子跟随效果
+        const particlesContainer = document.getElementById('particles-container');
+        let particles = [];
+        
+        document.addEventListener('mousemove', (e) => {
+            // 创建新粒子
+            createParticles(e.clientX, e.clientY, 3, true);
+            
+            // 更新现有粒子
+            updateParticles();
+        });
+        
+        function createParticles(x, y, count, isFollower = false) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // 随机大小
+                const size = Math.random() * 4 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // 位置
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                
+                // 随机颜色
+                const colors = [
+                    'rgba(57, 255, 20, 0.8)',
+                    'rgba(255, 127, 0, 0.8)',
+                    'rgba(255, 7, 58, 0.8)'
+                ];
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+                
+                // 粒子数据
+                const particleData = {
+                    element: particle,
+                    x: x,
+                    y: y,
+                    size: size,
+                    speedX: (Math.random() - 0.5) * (isFollower ? 2 : 6),
+                    speedY: (Math.random() - 0.5) * (isFollower ? 2 : 6),
+                    life: isFollower ? 30 : 60,
+                    maxLife: isFollower ? 30 : 60
+                };
+                
+                particles.push(particleData);
+            }
+        }
+        
+        function updateParticles() {
+            // 过滤掉已死亡的粒子
+            particles = particles.filter(particle => {
+                // 更新位置
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+                
+                // 更新生命周期
+                particle.life--;
+                
+                // 更新透明度
+                const alpha = particle.life / particle.maxLife;
+                particle.element.style.opacity = alpha;
+                
+                // 更新位置
+                particle.element.style.left = `${particle.x}px`;
+                particle.element.style.top = `${particle.y}px`;
+                
+                // 如果生命周期结束，移除元素
+                if (particle.life <= 0) {
+                    particle.element.remove();
+                    return false;
+                }
+                
+                return true;
+            });
+        }
+        
+        // 定期清理粒子
+        setInterval(updateParticles, 30);
+        
+        // 生成随机代码片段
+        const codeSnippetsContainer = document.getElementById('code-snippets');
+        const codeSamples = [
+            'console.log("Geek mode activated");',
+            'import { future, tech, code } from \'cyberpunk\';',
+            'const neon = { blue: 0x00f3ff, purple: 0xb200ff, pink: 0xff00c8 };',
+            'function hackTheMatrix() { return reality.isAnIllusion(); }',
+            'class NeuralNetwork { constructor() { this.consciousness = true; } }',
+            'while (true) { createSomethingAwesome(); }',
+            'for (let i = 0; i < infinity; i++) { innovate(); }',
+            'const quantum = new Promise((resolve) => resolve(superposition));',
+            'async function exploreUniverse() { await findAliens(); }',
+            'const binary = [0,1,0,1,1,0,0,1].map(b => b ? "🧠" : "💻");'
+        ];
+        
+        const codeColors = [
+            'text-neon-green',
+            'text-neon-orange',
+            'text-neon-red'
+        ];
+        
+        function createCodeSnippets() {
+            // 清除现有代码片段
+            codeSnippetsContainer.innerHTML = '';
+            
+            // 创建新的代码片段
+            const count = window.innerWidth < 768 ? 3 : 6;
+            for (let i = 0; i < count; i++) {
+                const codeBlock = document.createElement('div');
+                codeBlock.classList.add('code-block', 'text-opacity-40');
+                
+                // 随机选择代码和颜色
+                const code = codeSamples[Math.floor(Math.random() * codeSamples.length)];
+                const colorClass = codeColors[Math.floor(Math.random() * codeColors.length)];
+                codeBlock.classList.add(colorClass);
+                
+                // 设置内容
+                codeBlock.textContent = code;
+                
+                // 随机位置和大小
+                const left = Math.random() * 80 + 10; // 10% to 90%
+                const top = Math.random() * 80 + 10;  // 10% to 90%
+                const fontSize = Math.random() * 10 + 12; // 12px to 22px
+                
+                codeBlock.style.left = `${left}%`;
+                codeBlock.style.top = `${top}%`;
+                codeBlock.style.fontSize = `${fontSize}px`;
+                
+                // 随机延迟动画
+                const delay = Math.random() * 5;
+                codeBlock.style.animationDelay = `${delay}s`;
+                
+                codeSnippetsContainer.appendChild(codeBlock);
+            }
+        }
+        
+        // 初始创建代码片段
+        createCodeSnippets();
+        
+        // 窗口大小改变时重新生成代码片段
+        window.addEventListener('resize', createCodeSnippets);
+        
+        // 定期更新代码片段
+        setInterval(createCodeSnippets, 15000);
+        
+        // --- 微信模态框逻辑 ---
+        const weixinModal = document.getElementById('weixin-modal');
+        const weixinLink = document.getElementById('weixin-link');
+        const closeModalBtn = document.getElementById('close-modal');
 
+        // 打开模态框
+        weixinLink.addEventListener('click', function(e) {
+            e.stopPropagation(); // 防止触发卡片折叠
+            e.preventDefault();  // 防止<a>标签的默认跳转行为
+            weixinModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        });
+
+        // 关闭模态框
+        function closeModal() {
+            weixinModal.classList.remove('active');
+            document.body.style.overflow = ''; // 恢复背景滚动
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // 点击模态框外部关闭
+        weixinModal.addEventListener('click', function(e) {
+            if (e.target === weixinModal) {
+                closeModal();
+            }
+        });
+        
+        // --- 当前时间显示功能 ---
+        function updateCurrentTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                hour12: false,
+                timeZone: 'Asia/Shanghai'
+            };
+            const formattedTime = now.toLocaleString('zh-CN', options);
+            document.getElementById('current-time').textContent = formattedTime;
+        }
+        
+        // 初始化时间显示
+        updateCurrentTime();
+        
+        // 每秒更新一次时间
+        setInterval(updateCurrentTime, 1000);
+
+        // 按ESC键关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && weixinModal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // 初始化社交链接
+        setupSocialLinks();
+
+        function setupSocialLink(id, url) {
+            const link = document.getElementById(id);
+            if (link) {
+                link.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // 对于其他链接，保留原有的新窗口打开行为
+                    // if (url) {
+                    //     e.preventDefault();
+                    //     window.open(url, '_blank');
+                    // }
+                });
+            }
+        }
+    </script>
+
+
+</body></html>
 
 
 
